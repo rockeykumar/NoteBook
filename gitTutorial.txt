@@ -1,0 +1,95 @@
+Git Tutorial
+
+    • Details View
+      $ git config –list 
+      user.email=rockeykumar1901@gmail.com
+	user.name=rockeykumar
+	core.repositoryformatversion=0
+	core.filemode=true
+	core.bare=false
+	core.logallrefupdates=true
+	remote.origin.url=https://github.com/rockeykumar/grocery_store.git
+	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+	branch.main.remote=origin
+	branch.main.merge=refs/heads/main
+	remote.heroku.url=https://git.heroku.com/rajgrocery.git
+	remote.heroku.fetch=+refs/heads/*:refs/remotes/heroku/*
+
+    • Set Username And Password :
+      $ git config --global user.name “rockeykumar1996” 
+      $ git config --global user.email “rockey@bluepi.in”
+      
+    • Check Status : 
+      $ git status
+
+    • Git Initailisation :
+      $ git init
+      $ git status : Show the list of details.
+
+    • Add All File / track / stage
+      $ git add .
+
+    • Commit File To The Remote Location:
+      $ git commit -m “inital massage” 
+
+    • To set Remote:
+      $ git remote add origin https://github.com/rockeykumar/grocery_store.git
+      To check remote status: 
+      $ git remote
+
+    • Push all the file in the Repository
+      $ git push -u origin master 
+
+    • Check All Log File:
+      $ git log 
+      To End of the line press Ctr+q
+      for more details on commit 
+      $ git log --grep=”<commit massage>”
+      $ git log --since=”<30/01/2021>”
+      $ git log –until=”<18/08/2021>”
+
+
+    • Branch:
+      $ git log --oneline
+      create branch
+      7572616 fetch data dynamic url
+      bb98dc4 (origin/feature/xyz, origin/develop) initial commit of project structure
+      d256b1c .gitignore edited online with Bitbucket
+      e2624fe (origin/release/01.00_00) Initial commit
+
+	$ git branch <branch_name> 7572616 
+	Direct create Branch without HashCode
+
+	
+	$ git branch <branch_name>                   //current position of the branch
+
+    • Select Branch in Multilple Branch:
+      $ git branch
+      $ git checkout <branch_name>
+
+    • Branch Merg :
+      step 1: Go to branch, where to merg. eg. Develop -> merge
+                  $ git checkout master
+              
+	step 2: Merge Command (For Local Repository)
+		     $ git merge <other_branch_name>
+			eg. $ git merge develop
+				press “i” to insert new text
+				press “:wq” save and quit
+
+      step 3: Meger on Remote Repository
+                  $ git push -u origin master
+
+
+    • Delete Branch:
+    • Local Repository:
+          $ git branch -d <branch_name>
+          eg. $ git branch -d develop
+
+    • Remote Repository:
+          $ git push -d origin <branch_name>
+          eg. $ git push -d origin master develop
+	
+    
+
+Video Start with : no. 15 and time: 00:00min
