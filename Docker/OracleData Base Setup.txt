@@ -30,4 +30,11 @@ Step 1:
         - sudo docker exec -ti <container-name> sqlplus system/<password>@orclpdb1  --- replace <container-name> and <password>
         - sudo docker exec -ti oracle19c sqlplus system/admin123@orclpdb1
 
+# How to Run Oracle In Termical
+
+    - sudo docker exec -ti oracle19c sqlplus system/oracle@orclpdb1
+
+# how to check “servicename” in Oracle Database:
+SQL> select value from v$parameter where name like '%service_name%';
+
     
