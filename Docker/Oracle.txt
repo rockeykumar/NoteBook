@@ -1,0 +1,145 @@
+﻿1.ORACLE INSTALLATION
+Before installing make sure you have completed the following pre-requisite.
+    • The root access in the terminal in Ubuntu
+    • Docker installed in Ubuntu
+    • Git installed in Ubuntu
+    • 8GB+ RAM
+    • 20GB+ free space
+Check Docker version
+> docker version
+(Just for checking if you have docker installed.)
+
+2. Clone Oracle Docker Images
+Create a directory in Ubuntu where you want to host the show. 
+For me it’s /var/lib/docker/. You can change it according to your preference.
+> cd /var/lib/docker
+> git clone https://github.com/oracle/docker-images
+
+3. Download Oracle 19c zip from Oracle website
+You can download the zip from [https://www.oracle.com/database/technologies/oracle-database-software-downloads.html#19c]
+
+Download Linux x 86–64 from 19.3 section.
+Copy zip file in docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/.
+> cp <path-of-download-directory>/LINUX.X64_193000_db_home.zip /var/lib/docker/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/
+
+
+
+
+4. Run Docker 
+The next step is to run docker. Go to /var/lib/docker/docker-images/OracleDatabase/SingleInstance/dockerfiles directory. There is a file buildContainerImage.sh, you need to execute that file.
+Note: This process can take time, based on your system configuration.
+> cd /var/lib/docker/docker-images/OracleDatabase/SingleInstance/dockerfiles
+ > ./buildContainerImage.sh -v 19.3.0 -e 
+You will see the message “Build completed in xxx seconds.” once it's done.
+Then run the following command
+
+> docker images
+
+
+5. Run Docker Image
+> docker  run --name oracle19c --network host -p 1521:1521 -p 5500:5500 -v /opt/oracle:/u01/oracle oracle/database:19.3.0-ee
+
+You will see the password in the first line as an output of the above command. It’s similar to:
+ORACLE PASSWORD FOR SYS, SYSTEM AND PDBADMIN: ET10BpTqpVg=1
+Save this password for future reference. If you want you can change the password after the complete setup. The command to change the password is given at the end of this setup doc.
+
+Note: This process can take time, based on your system configuration.
+You will see “DATABASE IS READY TO USE” once it’s done. The last line should be “XDB initialized”.
+To be on the safer side once you see the line below you can stop the process with ctrl+c
+ORCLPDB1(3):Resize operation completed for file# 10, old size 327680K, new size 337920K
+
+Check docker by entering below command:
+> docker ps -a
+
+It will list the image created by the previous command. 
+Now start the oracle database.
+> docker start oracle19c
+You can access the Oracle Enterprise Manager Database Express on, https://localhost:5500/em/shell. 
+Username: system
+Password: <<Use that you have copied from the previous step>>
+Container: orclpdb1
+
+If you want to change the password, use command — 
+> docker exec oracle19c ./setPassword.sh <new-password>
+
+Connect database from docker terminal:
+> docker exec -ti oracle19c sqlplus system/<password>@orclpdb1
+
+2.SQL DEVELOPER INSTALLATION
+Prerequisites:
+    • Oracle JDK 8/11 (For me it’s JDK11)
+    • Oracle SQL Developer 
+    • Oracle Account
+
+Downloading Prerequisite
+Oracle JDK 8/11
+    1. Go to download Oracle JDK page
+    2. I will use Oracle JDK 11 because it has a .deb installation file which can be easily installed using dpkg
+    3. Download Oracle JDK 11 for Debian package , you will be prompted to sign in using oracle account to download.
+
+x64 Debian Package
+147.98 MB
+https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb
+(sha256 )
+
+Oracle SQL Developer
+    1. Go to download Oracle SQL Developer page
+    2. Download Oracle SQL Developer for Other Platforms .
+
+
+
+
+Other Platforms
+Download
+(437 MB)
+    • MD5: 270ba91438750d85faa0ab0a1c8481b9
+    • SHA1: b18cfb3adc26fbce1e6e6e454a83d741cf996c41
+    • Installation Notes
+    • JDK 8
+      or 11 required
+
+Prerequisite Completed
+Installation
+Install Oracle JDK 11 and Oracle SQL Developer
+Oracle JDK 11
+    1. Open your terminal, go to directory where your prerequisite files are located (in my case it's in ~/Downloads)
+    2. Install Oracle JDK 11 by using command sudo dpkg -i [YOUR_ORACLE_JDK_PACKAGE.deb], in my case it's sudo dpkg -i jdk-11.0.12_linux-x64_bin.deb
+    3. Verify your installation by listing the directory of /usr/lib/jvm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oracle SQL Developer 21.2
+    1. Open your terminal, go to /opt directory. This is where i will store the sqldeveloper application, you can choose other directory, but this my preference (and i read also that /opt is for 3rd party apps that we cannot install via apt package manager)
+    2. Unzip Oracle SQL Developer with command sudo unzip [YOUR_SQL_DEVELOPER_FILE_WITH_LOCATION].zip, in my case it's sudo unzip ~/home/bluepi/Downloads/sqldeveloper-21.2.1.204.1703-no-jre.zip. By default the unzip program will extract the zip file into the current directory, since we are in /opt now, we don't need to specify target directory.
+    3. Locate your Oracle JDK installation under /usr/lib/jvm, we'll need this location to tell Oracle SQL Developer where our Oracle JDK is located. 
+    4. Go inside the sqldeveloper directory
+
+
+5. You can see that sqldeveloper.sh has executable permission so that we can run it by doing ./sqldeveloper.sh or sh sqldeveloper.sh in the current directory.
+6. Run the sqldeveloper.sh file, you will be prompted to enter the Oracle JDK location, just paste it in and press enter.
+7. You will see Oracle SQL Developer starting.
+
+
+8. Installation done! You can use the application by executing the sqldeveloper.sh
+
+Now, you have to connect the sql developer with oracle.
+For that you can refer to this page Oracle in IDFC WVD Environment. , just change the credentials according to the screenshot below to run it locally.
+Username: system
+Password: <<Use the password which you got after oracle installation>>
+Service name: orclpdb1
+Screenshot attached for reference.
+
+

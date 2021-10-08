@@ -1,0 +1,33 @@
+# Docker Oracle19c Image Setup
+- Temporary Solution :
+    Download the file from this drive link - OracleDockerImage19c / [https://www.oracle.com/database/technologies/oracle-database-software-downloads.html#19c] 
+    Add the image to your docker image repository
+
+Step 1:
+    - docker load -i oracle19cDockerImage.tar    ----- for windows in cmd in adminitrator mode
+    - sudo docker load < oracle19cDockerImage.tar   ------ for ubuntu
+
+# Create the docker container
+    - sudo docker  run --name oracle19c --network host -e ORACLE_PWD=admin123 -e ORACLE_PDB=orclpdb1 -d oracle/database:19.3.0-ee
+
+    Make sure the password remains same across all the services, currently the docker container credentials are
+
+    - Oraclecredential:
+        username : system
+        password :admin123
+
+    To change the password of the oracle container, run the below command
+
+        - sudo docker exec <container-name> ./setPassword.sh <new-password>
+        - sudo docker exec oracle19c ./setPassword.sh admin123
+
+    Check whether the container setup is done by inspecting the logs
+
+        - sudo docker logs oracle19c
+
+    Connect to the console after waiting for around 20 minutes.
+
+        - sudo docker exec -ti <container-name> sqlplus system/<password>@orclpdb1  --- replace <container-name> and <password>
+        - sudo docker exec -ti oracle19c sqlplus system/admin123@orclpdb1
+
+    

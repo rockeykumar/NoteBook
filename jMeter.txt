@@ -1,0 +1,7 @@
+Step 1 :
+    Download the jMerter zip/software
+
+Step 2 :
+    - Inside the jMerter folder
+    - ./jmeter.sh -n -t /home/stpl/Desktop/JMeter_Testing/FetchAPI.jmx -l  /home/stpl/Desktop/JMeter_Testing/result/result1.csv -e -o /home/stpl/Desktop/Jmeter_Testing/htmlReport/report1
+    - Automatically created result file
