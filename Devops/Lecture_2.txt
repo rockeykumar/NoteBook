@@ -1,0 +1,5 @@
+Note :
+-> The term devops is a Combination of two words i.e Development and Operations.
+-> Devops is a Methodology that allowes a Single team to manage the entire application development life Cycle, that is develpment, testing, deployment and Operations.
+-> The objective of devops is to shorten the system's development life Cycle.
+-> Devops is a software development approach through which superior Quality Software can be developed Quickly and with more Reliability.
