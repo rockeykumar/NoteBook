@@ -1,0 +1,61 @@
+Note : It is PULL-Based Tool
+
+1. Chef is a Company and the name of a Configuration Management tool Written in Ruby and Erlang.
+2. Founded By Adam Jacobs in year 2009
+3. Actual Name was "Marionette" Later renamed to "Chef".
+4. On april, 2019, the Company announced that all their products are now Open source under the Apache 2.0 License.
+5. Chef is used by Facebook, AWS Opsworks, HP public Cloud etc.
+6. Chef is an administration tool. Whatever Systen admins used to do manually, now we are automating all those task by using Chef.
+
+Configuration Management : It is a method through which we automate admin tasks.
+-> Configuration Management tool turns your Code into Infrastructure.
+-> So your Code would be Repeatable testable and Versionable.
+
+Advantages of CM Tool:
+1. Complete Automation
+2. Increase Uptime
+3. Improve Performance
+4. Ensure Compliance
+5. Prevent Errors
+6. Reduce Cost
+
+Chef - Architecture Or Process
+
+WorkStation:
+    CookBook : It is collection of Recipes. It is stored/upload in chef-server
+        Recipes : Instruction of code, lines code, to be executable
+
+Took for code to push the Recipes into chef-server : Knife
+Knife (Process is called : Bootstrap) - Helps to connect the nodes/computer to chef-server. 
+Chef-Supermarket : already list of code, cookbook available
+
+
+Chef-client - Tool
+Ohai - Database
+
+WorkStation : 
+    - WorkStation are personal computers or virtual servers where all configuration code is created, tested or changed.
+    - Devops engineer acturally sits here and write codes. Thid code is called Recipe. A coolection of Recipes are kown ad Cookbook.
+    - WorkStation Communicate with te Chef Server using Knife.
+    - Knife is a command line tool that uploads the CookBook to the server.
+
+Chef-Server :
+    - The chef-server is a middle-man between workstation and the nodes.
+    - All Cookbooks are stored here.
+    - Sever may be hosted locally or remote.
+
+Node :
+    - Nodes are the systems that requires the configruation.
+    - Ohai Fetches the courrent state of the node its located in.
+    - Node Communicate with the chef-sever using the Chef-Client.
+    - Each node can have a different Configuration Required.
+    - Chef-Client is installed on every node.
+
+Chef-Client :
+    - Gather current system configruation.
+    - Download the desired System configuration from the chef-server.
+    - Configure the node such that it adhere to the policy.
+
+Ohai : Maintain current state information of chef code.
+Idempotency : Tracking the state of system Resources to ensure that the changes should not reapply repeatedly.
+Chef-Supermarket : Where you get Custom Code.

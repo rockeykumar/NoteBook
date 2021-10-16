@@ -1,0 +1,63 @@
+# How to install and create Cookbook and Recipe 
+
+Step 1:
+    - Frist of all Create one Linux Machine in AWS (optional), required Linux OS
+    - Now use putty and access the machine.
+        Login as - ec2-user
+            sudo su <enter>
+            sudo update -y <enter>
+    
+Step 2:
+    - Now go tho Google, Search https://www.chef.io
+    - Go to downloads -> chef-workstation
+    - Enter name, email, company -> It automatically starts downloading -> go to Downloads & Copy the URL.
+
+Step 3:
+    - Now to Linux machine.
+        [ec2-user]# wget <URL>
+        [ec2-user]# ls                //It shows chef package.
+        [ec2-user]# sudo install <chef-workstation> -y
+        [ec2-user]# which chef
+        [ec2-user]# chef --version
+
+
+Cookbook : Cookbook is a collection of recipes and some other files and folders;
+
+Inside Cookbook: 
+    - Chefignore = like .gitignore
+    - kitchen.yml = for testing Cookbook
+    - Metadata.rb = name, version, author etc of Cookbook.
+    - Readme.md = information about usage of Cookbook.
+    - Recipe = where you write code
+    - spec = for unit test.
+    - Test = for integration test
+
+[ec2-user]# which chef
+[ec2-user]# mkdir cookbooks
+[ec2-user]# ls
+[ec2-user]# cd cookbooks/
+
+[cookbooks]# chef generate cookbook / recipe test-cookbook_name
+[cookbooks]# sudo install tree -y 
+[cookbooks]# tree
+[cookbooks]# cd test-cookbook_name/
+
+[test-cookbook_name]# chef generate recipe <recipe1>
+[test-cookbook_name]# tree
+[test-cookbook_name]# cd ..
+
+[cookbooks]# vi test-cookbook_name/recipes/test-recipe.rb
+
+                        File '/myfile' do 
+                        Content 'Welcome To Raj Kingdom'
+                        action: create
+                        end
+
+                        // write and save
+
+[cookbooks]# chef spec ruby -c test-cookbook/recipes/test-recipe.rb                   // syntax OK
+[cookbooks]# chef-client -zr "recipe[test-cookbook::test-recipe]"
+[cookbooks]# ls
+[cookbooks]# 
+
+
