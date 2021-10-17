@@ -1,0 +1,31 @@
+# How to Install Jenkins
+
+step 1:
+    - Go to Docker Hub and search Jenkins.
+    - Search Official Jenkins Images. [https://hub.docker.com/_/jenkins]
+    - Download Latest Images
+    - docker pull jenkins/jenkins      // Latest
+
+step 2:
+    Method 1 : Without detached / deamon / background mode 
+        - Run docker Image
+        - sudo docker run -p 8080:8080 --name=jenkins jenkins/jenkins       // wait for complete installation
+        - http://localhost:8080/login?from=%2F                              // [set administrator password, password show when container is created]
+        - Container password : <b2f3dca2971f49229ab119c685862e73> and continue
+
+    Method 2 : With detached / deamon / background mode, But one problem is container password is not show
+        - Run docker Image
+        - sudo docker run -p 8080:8080 -d --name=jenkins jenkins/jenkins       // wait for complete installation
+        - For password
+        - docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword  // enter
+        - Container password : <b2f3dca2971f49229ab119c685862e73> and continue
+
+
+step 3:
+    - select : Install suggested plugins (automatically all required plugins installed)
+    - Create First Admin User
+        username : admin
+        password : admin123
+        name : <rockey>
+        email : <rockey@gmail.com>
+    - start using jenkins
