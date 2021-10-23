@@ -18,6 +18,8 @@ step 2:
         - sudo docker run -p 8080:8080 -d --name=jenkins jenkins/jenkins       // wait for complete installation
         - For password
         - docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword  // enter
+                                    or
+        - docker exec jenkins cat /var/lib/jenkins/secrets/initialAdminPassword  // enter
         - Container password : <b2f3dca2971f49229ab119c685862e73> and continue
 
 

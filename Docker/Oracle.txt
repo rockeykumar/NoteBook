@@ -109,18 +109,6 @@ Oracle JDK 11
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 Oracle SQL Developer 21.2
     1. Open your terminal, go to /opt directory. This is where i will store the sqldeveloper application, you can choose other directory, but this my preference (and i read also that /opt is for 3rd party apps that we cannot install via apt package manager)
     2. Unzip Oracle SQL Developer with command sudo unzip [YOUR_SQL_DEVELOPER_FILE_WITH_LOCATION].zip, in my case it's sudo unzip ~/home/bluepi/Downloads/sqldeveloper-21.2.1.204.1703-no-jre.zip. By default the unzip program will extract the zip file into the current directory, since we are in /opt now, we don't need to specify target directory.
