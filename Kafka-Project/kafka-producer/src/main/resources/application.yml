@@ -1,0 +1,13 @@
+micronaut:
+  application:
+    name: kafkaProducer
+    server:
+      port: 6001
+
+  handlers:
+    url: StudentData.json
+
+
+#kafka:
+#  bootstrap:
+#    servers: localhost:9092
