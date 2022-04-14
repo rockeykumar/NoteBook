@@ -102,3 +102,33 @@ public class CreateProducer {
 //        }
 //    }
 }
+
+
+
+// producer.send(record, new Callback() {
+//     public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+        
+//         if(e == null) {
+//             logger.info("successfully recieved the details as: \n" +
+//                         "Topic:" + recordMetadata.topic() + "\n" + 
+//                         "Partition:" + recordMetadata.partition() + "\n" +
+//                         "Offset:" + recordMetadata.offset() + "\n" +
+//                         "Timestamp:" + recordMeatadata.timestamp());
+//         } else {
+//             logger.error("Can't produce, getting error", e);
+//         }
+//     }
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
