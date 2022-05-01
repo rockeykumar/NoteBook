@@ -1,0 +1,67 @@
+ARG DEBIAN_FRONTEND=noninteractive
+ARG UBUNTU_VERSION="latest"
+FROM ubuntu:$UBUNTU_VERSION
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+ARG http_port=8080
+ARG agent_port=50000
+ARG JENKINS_HOME=/jenkins_home
+RUN mkdir -p $JENKINS_HOME \
+  && chown ${uid}:${gid} $JENKINS_HOME \
+  && groupadd -g ${gid} ${group} \
+  && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+# WORKDIR /root
+RUN apt-get update
+# RUN DEBIAN_FRONTEND=noninteractive apt install software-properties-common -y --no-install-recommends
+# RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:git-core/ppa
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt install git -y --no-install-recommends
+RUN apt-get install ca-certificates curl gnupg lsb-release -y --no-install-recommends
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update
+RUN apt-get install docker-ce-cli -y --no-install-recommends
+# RUN apt-get install --no-install-recommends --yes curl
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes apt-utils dialog
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes openssh-client
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes default-jdk
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes default-jre
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes maven
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes git
+# apt-get install --no-install-recommends --yes dialog apt-utils
+# RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --dry-run
+ARG JENKINS_WAR_URL="https://get.jenkins.io/war-stable/2.332.2/jenkins.war"
+RUN cd $JENKINS_HOME
+WORKDIR $JENKINS_HOME
+RUN wget --no-check-certificate $JENKINS_WAR_URL
+# WORKDIR /root
+# COPY ./entrypoint.sh /entrypoint.sh
+# RUN chmod 777 /entrypoint.sh
+EXPOSE 8080
+EXPOSE 50000
+USER ${user}
+ENV JENKINS_DIR=$JENKINS_HOME
+# HEALTHCHECK CMD curl --fail http://localhost:9091 || exit 1
+ENTRYPOINT java -jar $JENKINS_DIR/jenkins.war
+
+
+
+
+
+
+
+command.txt
+###### Docker Run Command #####
+docker network create jenkins ## this is not correct, search it on google
+## docker run --name jenkins-docker --rm -d --privileged --network jenkins --network-alias docker -e DOCKER_TLS_CERTDIR=/certs -v jenkins-docker-certs:/certs/client -v jenkins-data:/var/jenkins_home -p 2376:2376 -p 3000:3000 docker:dind --storage-driver overlay2 
+sudo docker run --name jenkins-docker -d --privileged --network jenkins --network-alias docker -e DOCKER_TLS_CERTDIR="" -v /mnt/c/Work/BluePi/JenkinsData/jenkins:/jenkins_home/.jenkins -v /home:/home -p 2375:2375 -p 2376:2376 docker:dind --storage-driver overlay2
+## docker run --name jenkins-blueocean --rm -d --network jenkins -e DOCKER_HOST=tcp://docker:2376 -e DOCKER_CERT_PATH=/certs/client -e DOCKER_TLS_VERIFY=1 -v jenkins-data:/var/jenkins_home -v jenkins-docker-certs:/certs/client:ro -v "%HOMEDRIVE%%HOMEPATH%":/home -p 8080:8080 -p 50000:50000 jenkins/jenkins:latest
+## docker run --name jenkins -d --network jenkins -e DOCKER_HOST=tcp://docker:2376 -v /mnt/c/Work/BluePi/JenkinsData/jenkins:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins:latest
+## docker run --name jenkins -u 0 -d --network jenkins -e DOCKER_HOST=tcp://docker:2375 -v /mnt/c/Work/BluePi/JenkinsData/jenkins:/root/.jenkins -v /home:/home -p 8080:8080 -p 50000:50000 custom-jenkins:latest
+sudo docker run --name jenkins -d --network jenkins -e DOCKER_HOST=tcp://docker:2375 -v /mnt/c/Work/BluePi/JenkinsData/jenkins:/jenkins_home/.jenkins -v /home/strife/.ssh:/jenkins_home/.ssh -v /home/strife/.m2:/jenkins_home/.m2 -p 8080:8080 -p 50000:50000 custom-jenkins:latest
