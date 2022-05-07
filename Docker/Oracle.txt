@@ -1,4 +1,4 @@
-﻿1.ORACLE INSTALLATION
+﻿1.ORACLE INSTALLATION - Tested By ME(rocky)
 Before installing make sure you have completed the following pre-requisite.
     • The root access in the terminal in Ubuntu
     • Docker installed in Ubuntu
